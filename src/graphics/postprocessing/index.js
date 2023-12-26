@@ -38,7 +38,7 @@ export default class PostProcessing {
   }
   render(t) {
     this.mainPass.uniforms.time.value = t;
-    this.mainPass.uniforms.slowMotion.value = t / 4;
+    this.mainPass.uniforms.slowMotion.value = t / 2;
 
     // Animate the coords uniform's Vector2 value using GSAP
     gsap.to(this.mainPass.uniforms.coords.value, {
