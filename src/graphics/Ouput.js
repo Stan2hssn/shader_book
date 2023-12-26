@@ -2,7 +2,7 @@
 
 import Common from "@/graphics/Common";
 
-import Powers from "@/graphics/components/Powers";
+// import Powers from "@/graphics/components/Powers";
 
 import PostProcessing from "@/graphics/postprocessing/index";
 
@@ -15,16 +15,16 @@ export default class Output {
   }
 
   init() {
-    this.components.powers = new Powers();
+    // this.components.powers = new Powers();
 
     this.postprocessing = new PostProcessing();
   }
 
   render(t) {
-    Object.keys(this.components).forEach(_ => {
+    Object.keys(this.components).forEach((_) => {
       this.components[_].render(t);
     });
-    if(!this.postProcess) {
+    if (!this.postProcess) {
       Common.render();
     } else {
       this.postprocessing.render(t);
@@ -32,14 +32,14 @@ export default class Output {
   }
 
   dispose() {
-    Object.keys(this.components).forEach(_ => {
+    Object.keys(this.components).forEach((_) => {
       this.components[_].dispose();
     });
     this.postprocessing.dispose();
   }
 
   resize() {
-    Object.keys(this.components).forEach(_ => {
+    Object.keys(this.components).forEach((_) => {
       this.components[_].resize();
     });
     this.postprocessing.resize();

@@ -41,6 +41,6 @@ canvas {
   width: 100%;
   height: 100%;
   display: block;
-  background-color: black;
+  background-color: #0E0E0E;
 }
 </style>
