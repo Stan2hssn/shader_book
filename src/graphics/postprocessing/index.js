@@ -14,7 +14,7 @@ import gsap from "gsap"
 
 export default class PostProcessing {
   params = {
-    panelColor: { r: 50, g: 50, b: 50 },
+    panelColor: { r: 255, g: 255, b: 255 },
     gridX: 6,
     gridY: 18,
     tail: 0,
@@ -22,7 +22,7 @@ export default class PostProcessing {
     frequency: 0.17,
     amplitude: 0.01,
     shift: 1,
-    scale: 0.57,
+    scale: 0.6,
   }
 
   constructor() {
