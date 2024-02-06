@@ -1,42 +1,46 @@
-import Input from "./Input";
-import Common from "./Common";
-import Output from "./Ouput";
+import Input from "./Input"
+import Common from "./Common"
+import Output from "./Ouput"
 
-import gsap from "gsap";
+import gsap from "gsap"
 
 export default class {
-  components = {};
-  
+  components = {}
+
   constructor({ canvas }) {
-    Input.init();
-    Common.init(canvas);
+    Input.init()
+    Common.init(canvas)
 
-    this.output = new Output();
+    this.output = new Output()
 
-    this.init();
+    this.init()
+
+    if (Common.debug) {
+      Common.setDebug()
+      this.output.setDebug()
+    }
   }
   init() {
-    this.resize();
-    this.x = this.resize.bind(this);
-    window.addEventListener("resize", this.x, false);
+    this.resize()
+    this.x = this.resize.bind(this)
+    window.addEventListener("resize", this.x, false)
 
-    gsap.ticker.add(this.render.bind(this));
+    gsap.ticker.add(this.render.bind(this))
   }
   render(t) {
-    Input.render(t);
-    this.output.render(t);
+    Input.render(t)
+    this.output.render(t)
   }
   resize() {
-    
-    Input.resize();
-    Common.resize();
-    this.output.resize();
+    Input.resize()
+    Common.resize()
+    this.output.resize()
   }
   destroy() {
-    window.removeEventListener("resize", this.x);
+    window.removeEventListener("resize", this.x)
 
-    Input.dispose();
-    Common.dispose();
-    this.output.dispose();
+    Input.dispose()
+    Common.dispose()
+    this.output.dispose()
   }
 }

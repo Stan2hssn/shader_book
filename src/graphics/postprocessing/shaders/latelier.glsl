@@ -15,7 +15,7 @@ float random(vec2 st)
 
 float grid(vec2 st, float width)
 {
-    st = st * 2. -1. ;
+    st = st * 2. -1.;
     float AR = res.x/res.y;
     st.x *= AR;
     float size = 1.5;
@@ -32,7 +32,7 @@ float circle(in vec2 st){
     st -= coords;
     st.x *= AR;
     float l = length(st / 2.);
-	return S(.0, 1., sin(l)) - S(.1, 0., l);
+	return S(.0, 1., l) - S(.1, 0., l);
 }
 
 void main()
@@ -46,9 +46,8 @@ void main()
     vec3 bg = RGB(14., 14., 14.);
     float colorGrid = rgb - grid(st, .003);
 
-    color = vec3(colorGrid);
+    color = vec3(colorGrid) - vec3(circle(st - delta), circle(st), circle(st + delta));
     float mask = colorGrid - (circle(st) - colorGrid);
-
     
-    gl_FragColor = vec4( vec3(color) - vec3(circle(st - delta), circle(st), circle(st + delta)), mask);
+    gl_FragColor = vec4( vec3(colorGrid) - circle(st), mask);
 }
