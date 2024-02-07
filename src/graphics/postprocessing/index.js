@@ -14,6 +14,7 @@ import gsap from "gsap"
 
 export default class PostProcessing {
   params = {
+    sceneColor: "#000000",
     panelColor: { r: 255, g: 255, b: 255 },
     gridX: 6,
     gridY: 18,
@@ -60,6 +61,8 @@ export default class PostProcessing {
     this.mainPass.uniforms.time.value = t
     this.mainPass.uniforms.slowMotion.value = t / 2
 
+    document.querySelector("canvas").style.backgroundColor = Common.params.sceneColor
+
     // Animate the coords uniform's Vector2 value using GSAP
     gsap.to(this.mainPass.uniforms.coords.value, {
       x: Input.coords.x,
@@ -83,6 +86,9 @@ export default class PostProcessing {
     Common.debugFolder = debug.addFolder({
       title: "Post Processing",
       expanded: true,
+    })
+    Common.debugFolder.addBinding(Common.params, "sceneColor").on("change", () => {
+      document.querySelector("canvas").style.backgroundColor = Common.params.sceneColor
     })
 
     Common.debugFolder.addBinding(params, "panelColor").on("change", () => {

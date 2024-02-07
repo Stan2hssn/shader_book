@@ -53,7 +53,7 @@ class Common {
   setDebug() {
     const { debug: pane, params, scene } = this
 
-    params.sceneColor = "#bebebe"
+    params.sceneColor = "#000"
     scene.background = new Color(params.sceneColor)
 
     this.debugFolder = pane.addFolder({
