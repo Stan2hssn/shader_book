@@ -27,6 +27,7 @@ void main() {
   float x = sin(g) / (amplitude * 60.) + vShift;
   float r = step(x * tail, st.x) * step(x * (1. - head), 1. - st.x);
 
-  vec3 color = vec3(r); // Initialize color as black
-  gl_FragColor = vec4(vec3(panelColor), color);
+  vec3 color = mix(vec3(0.), panelColor, r); // Initialize color as black
+
+  gl_FragColor = vec4(color, r);
 }
