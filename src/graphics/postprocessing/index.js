@@ -14,7 +14,7 @@ import gsap from "gsap"
 
 export default class PostProcessing {
   params = {
-    panelColor: { r: 255, g: 255, b: 255 },
+    panelColor: { r: 59, g: 83, b: 145 },
     gridX: 6,
     gridY: 18,
     tail: 0.0,
@@ -145,7 +145,7 @@ export default class PostProcessing {
         {
           value: 1,
           duration: 1 + 0.8 * this.params.d,
-          delay: 0.4 + 0.9 * this.params.d,
+          delay: 0.4 + 0.6 * this.params.d,
           ease: "power4.in",
         }
       )

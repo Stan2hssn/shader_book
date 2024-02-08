@@ -36,7 +36,7 @@ float r(vec2 st) {
   float f = delay(frequency, st) * 1.5 - .2;
 
   float outer = floor(((st.y + f) * (PI / delay(scale, st) * .8)) * gridy) / gridy;
-  float inner = floor(((st.y - inverseDelay(.45, st)) * (PI / delay(scale, st) * 2.) - .2) * gridy) / gridy;
+  float inner = floor(((st.y - inverseDelay(.45, st)) * (PI / delay(scale, st) * .8) - .2) * gridy) / gridy;
   float xOut = sin(outer) / (amplitude * 30.) + vShift;
   float xIn = pow(inner, 2.) / (amplitude * 60.) + vShift;
 
