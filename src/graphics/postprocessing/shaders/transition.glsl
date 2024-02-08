@@ -33,7 +33,7 @@ float delayReset(float a, vec2 st) {
 float r(vec2 st) {
   float vShift = delay(shift, st) * 3.;
   float gridy = gridY / 5.;
-  float f = delay(frequency, st) * 1.5 - .2;
+  float f = delay(frequency, st) * 1.5 - .24;
 
   float outer = floor(((st.y + f) * (PI / delay(scale, st) * .8)) * gridy) / gridy;
   float inner = floor(((st.y - inverseDelay(.45, st)) * (PI / delay(scale, st) * .8) - .2) * gridy) / gridy;
