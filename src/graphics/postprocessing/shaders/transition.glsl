@@ -11,23 +11,44 @@ uniform float frequency;
 uniform float amplitude;
 uniform float shift;
 uniform float scale;
+uniform float d;
 
 #define PI 3.14159265359
 
-void main() {
-  vec2 st = gl_FragCoord.xy / res.xy;
+float delay(float a, vec2 st) {
+  float result = a + sin(floor(st.x * gridX) / gridX);
+  return result * d;
+}
+
+float inverseDelay(float a, vec2 st) {
+  float result = a - sin(floor(st.x * gridX) / gridX) / 15.;
+  return result;
+}
+
+float delayReset(float a, vec2 st) {
+  float result = a + sin(floor(st.x * gridX) / gridX);
+  return result * d;
+}
+
+float r(vec2 st) {
+  float vShift = delay(shift, st) * 3.;
+  float gridy = gridY / 5.;
+  float f = delay(frequency, st) * 1.5 - .2;
+
+  float outer = floor(((st.y + f) * (PI / delay(scale, st) * .8)) * gridy) / gridy;
+  float inner = floor(((st.y - inverseDelay(.45, st)) * (PI / delay(scale, st) * 2.) - .2) * gridy) / gridy;
+  float xOut = sin(outer) / (amplitude * 30.) + vShift;
+  float xIn = pow(inner, 2.) / (amplitude * 60.) + vShift;
 
   st.x *= gridX;
   st = fract(st);
 
-  float vShift = shift * 3.;
-  float gridy = gridY / 5.;
-  float f = frequency * 10.;
-  float g = floor(((st.y + f) * (PI / scale)) * gridy) / gridy;
-  float x = sin(g) / (amplitude * 60.) + vShift;
-  float r = step(x * tail, st.x) * step(x * (1. - head), 1. - st.x);
+  return step(xOut * (tail), st.x) * step(xIn * (1. - head), 1. - st.x);
+}
 
-  vec3 color = mix(vec3(0.), panelColor, r); // Initialize color as black
+void main() {
+  vec2 st = gl_FragCoord.xy / res.xy;
+  vec3 color = mix(vec3(0.), panelColor, r(st));
 
-  gl_FragColor = vec4(color, r);
+  gl_FragColor = vec4(color, r(st));
 }

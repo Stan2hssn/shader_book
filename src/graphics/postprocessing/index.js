@@ -17,17 +17,18 @@ export default class PostProcessing {
     panelColor: { r: 255, g: 255, b: 255 },
     gridX: 6,
     gridY: 18,
-    tail: 0,
+    tail: 0.0,
     head: 0,
-    frequency: 0.17,
+    frequency: 0,
     amplitude: 0.01,
-    shift: 1,
-    scale: 0.6,
+    shift: 1.5,
+    scale: 0.4,
+    d: 1.0,
   }
 
   constructor() {
     const { width, height } = Device.viewport
-    const { panelColor, gridX, gridY, tail, head, frequency, amplitude, shift, scale } = this.params
+    const { panelColor, gridX, gridY, tail, head, frequency, amplitude, shift, scale, d } = this.params
 
     this.passes = {}
     this.composers = {}
@@ -50,6 +51,7 @@ export default class PostProcessing {
         amplitude: new Uniform(amplitude),
         shift: new Uniform(shift),
         scale: new Uniform(scale),
+        d: new Uniform(d),
       },
       vertexShader,
       fragmentShader,
@@ -110,17 +112,20 @@ export default class PostProcessing {
     Common.debugFolder.addBinding(params, "frequency", { min: 0, max: 1, step: 0.01 }).on("change", () => {
       this.mainPass.uniforms.frequency.value = this.params.frequency
     })
-    Common.debugFolder.addBinding(params, "amplitude", { min: 0.04, max: 1, step: 0.01 }).on("change", () => {
+    Common.debugFolder.addBinding(params, "amplitude", { min: 0.01, max: 1, step: 0.01 }).on("change", () => {
       this.mainPass.uniforms.amplitude.value = this.params.amplitude
     })
-    Common.debugFolder.addBinding(params, "shift", { min: 0, max: 1, step: 0.01 }).on("change", () => {
+    Common.debugFolder.addBinding(params, "shift", { min: 0.9, max: 2, step: 0.01 }).on("change", () => {
       this.mainPass.uniforms.shift.value = this.params.shift
     })
-    Common.debugFolder.addBinding(params, "scale", { min: 0, max: 1, step: 0.01 }).on("change", () => {
+    Common.debugFolder.addBinding(params, "scale", { min: 0.1, max: 2, step: 0.1 }).on("change", () => {
       this.mainPass.uniforms.scale.value = this.params.scale
     })
+    Common.debugFolder.addBinding(params, "d", { min: 0, max: 3, step: 0.1 }).on("change", () => {
+      this.mainPass.uniforms.d.value = this.params.d
+    })
 
-    Common.debugFolder.addButton({ title: "play", label: "Animation" }).on("click", () => {
+    Common.debug.addButton({ title: "play", label: "Animation" }).on("click", () => {
       gsap.fromTo(
         this.mainPass.uniforms.head,
         {
@@ -128,7 +133,7 @@ export default class PostProcessing {
         },
         {
           value: 1,
-          duration: 1,
+          duration: 1 + 0.8 * this.params.d,
           ease: "power4.out",
         }
       )
@@ -139,8 +144,8 @@ export default class PostProcessing {
         },
         {
           value: 1,
-          duration: 1,
-          delay: 0.4,
+          duration: 1 + 0.8 * this.params.d,
+          delay: 0.4 + 0.9 * this.params.d,
           ease: "power4.in",
         }
       )
